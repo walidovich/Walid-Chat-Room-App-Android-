@@ -2,6 +2,7 @@ package com.shumen.chatapp;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static int SIGN_IN_REQUEST_CODE = 1;
     private FirebaseListAdapter<ChatMessage> adapter;
+    private FirebaseUser user;
 
     private ConstraintLayout activity_main;
     private ListView listOfMessages;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Snackbar.make(activity_main, "Welcome  " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
                     Snackbar.LENGTH_LONG).show();
+            user= FirebaseAuth.getInstance().getCurrentUser();
 
             // Displaying existing messages in the chat room
             displayChatMessages();
@@ -132,12 +135,19 @@ public class MainActivity extends AppCompatActivity {
 
                 messageUserName.setText(model.getMessageUserName()+":");
                 messageText.setText(model.getMessageText());
-                if(model.getMessageUserEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
-                    messageText.append(". From "+messageUserName.getText());
                 messageUserEmail.setText(model.getMessageUserEmail());
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (hh:mm:ss)", model.getMessageTime()));
+                customizeBackground(model);
             }
         };
         listOfMessages.setAdapter(adapter);
+    }
+
+    private void customizeBackground(ChatMessage model) {
+        if(!model.getMessageUserEmail().equals(user.getEmail())){
+            messageUserName.setBackgroundResource(R.color.colorMessageBackgroundOut);
+        }else{
+            messageUserName.setBackgroundResource(R.color.colorMessageBackgroundIn);
+        }
     }
 }

@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#202020</color>
     <color name="colorAccent">#4053ff</color>
     <color name="messageBackground">#dddddd</color>
-    <color name="colorMessageBackgroundIn">#dddddd</color>
-    <color name="colorMessageBackgroundOut">#3f4dff</color>
+    <color name="colorMessageBackgroundOut">#7aff77</color>
+    <color name="colorMessageBackgroundIn">#5a9fff</color>
 </resources>
