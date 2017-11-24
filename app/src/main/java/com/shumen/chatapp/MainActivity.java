@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     EditText input;
 
+    // Testing commit and push
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_sign_out) {
