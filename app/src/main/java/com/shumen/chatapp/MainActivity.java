@@ -1,6 +1,7 @@
 package com.shumen.chatapp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listOfMessages;
     private FloatingActionButton fab;
     private EditText input;
+    private TextView messageUserName, messageText, messageUserEmail, messageTime;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -122,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference()) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
-                TextView messageUserName, messageText, messageUserEmail, messageTime;
 
                 messageUserName = v.findViewById(R.id.message_user_name);
                 messageText = v.findViewById(R.id.message_text);
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
                 messageUserName.setText(model.getMessageUserName()+":");
                 messageText.setText(model.getMessageText());
+                if(model.getMessageUserEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                    messageText.append(". From "+messageUserName.getText());
                 messageUserEmail.setText(model.getMessageUserEmail());
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (hh:mm:ss)", model.getMessageTime()));
             }

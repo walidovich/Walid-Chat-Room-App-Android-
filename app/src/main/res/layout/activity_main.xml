@@ -6,17 +6,17 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.shumen.chatapp.MainActivity">
+    tools:context="com.shumen.chatapp.MainActivity"
+    >
 
 
     <ListView
         android:id="@+id/list_of_messages"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="468dp"
         android:layout_marginBottom="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
         android:stackFromBottom="true"
@@ -24,10 +24,10 @@
         app:layout_constraintBottom_toTopOf="@+id/input_message"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1">
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
 
         <!-- These let the list view load and always scroll to last item
         android:stackFromBottom="true"
@@ -52,7 +52,8 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_send"
@@ -67,6 +68,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintRight_creator="1"/>
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginRight="16dp"/>
 
 </android.support.constraint.ConstraintLayout>
