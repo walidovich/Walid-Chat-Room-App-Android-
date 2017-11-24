@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "730792354181",
+    "firebase_url": "https://chatapp-443c3.firebaseio.com",
+    "project_id": "chatapp-443c3",
+    "storage_bucket": "chatapp-443c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730792354181:android:42804036afc3d39b",
+        "android_client_info": {
+          "package_name": "com.shumen.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730792354181-2i7tufumnj0t85v7glm23312h5c2i9ss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shumen.chatapp",
+            "certificate_hash": "4cbafdff2c79b363bdb356d69d2664f024d5eb1c"
+          }
+        },
+        {
+          "client_id": "730792354181-v0mo0de76gavm4r8duisk37hj2o3v5rc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6zTab9aHHmglbAofRUxYjLsdND_F3YFY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730792354181-v0mo0de76gavm4r8duisk37hj2o3v5rc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
