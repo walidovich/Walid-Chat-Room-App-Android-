@@ -3,6 +3,7 @@ package com.shumen.chatapp;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +15,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.text.format.DateFormat;
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static int SIGN_IN_REQUEST_CODE = 1;
     private FirebaseListAdapter<ChatMessage> adapter;
 
-    RelativeLayout activity_main;
+    ConstraintLayout activity_main;
     ListView listOfMessages;
     FloatingActionButton fab;
     EditText input;
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         activity_main = findViewById(R.id.activity_main);
-        listOfMessages = findViewById(R.id.list_of_message);
+        listOfMessages = findViewById(R.id.list_of_messages);
         fab = findViewById(R.id.fab);
         input = findViewById(R.id.input);
 
