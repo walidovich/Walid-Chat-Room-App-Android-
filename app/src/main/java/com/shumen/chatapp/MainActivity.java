@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Snackbar.make(activity_main, "You have been signed out", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(activity_main, "You have been signed out", Snackbar.LENGTH_LONG).show();
                     finish();
                 }
             });
@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGN_IN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Snackbar.make(activity_main, "Successfully signed in. Welcome!", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(activity_main, "Successfully signed in. Welcome!", Snackbar.LENGTH_LONG).show();
             } else {
-                Snackbar.make(activity_main, "We couldn't sign you in. Please try again later.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(activity_main, "We couldn't sign you in. Please try again later.", Snackbar.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         input = findViewById(R.id.input);
 
+        // Pushes the list view on top of the virtual keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     SIGN_IN_REQUEST_CODE);
         } else {
             Snackbar.make(activity_main, "Welcome " + FirebaseAuth.getInstance().getCurrentUser().getEmail(),
-                    Snackbar.LENGTH_SHORT).show();
+                    Snackbar.LENGTH_LONG).show();
             displayChatMessages();
         }
     }

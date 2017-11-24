@@ -25,12 +25,13 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
+        android:stackFromBottom="true"
         >
     </ListView>
 
     <EditText
         android:layout_width="0dp"
-        android:layout_height="43dp"
+        android:layout_height="wrap_content"
         android:hint="Type your message here"
         android:id="@+id/input"
         android:layout_alignParentBottom="true"
