@@ -1,6 +1,5 @@
 package com.shumen.chatapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -12,8 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,12 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private static int SIGN_IN_REQUEST_CODE = 1;
     private FirebaseListAdapter<ChatMessage> adapter;
 
-    ConstraintLayout activity_main;
-    ListView listOfMessages;
-    FloatingActionButton fab;
-    EditText input;
-
-    // Testing commit and push
+    private ConstraintLayout activity_main;
+    private ListView listOfMessages;
+    private FloatingActionButton fab;
+    private EditText input;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -78,43 +73,33 @@ public class MainActivity extends AppCompatActivity {
 
         activity_main = findViewById(R.id.activity_main);
         listOfMessages = findViewById(R.id.list_of_messages);
-        fab = findViewById(R.id.fab);
-        input = findViewById(R.id.input);
+        fab = findViewById(R.id.fab_send);
+        input = findViewById(R.id.input_message);
 
-        // Pushes the list view on top of the virtual keyboard
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseDatabase.getInstance().getReference().push().setValue(new ChatMessage(input.getText().toString(),
-                        FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-                input.setText("");
-
-                // Hide the virtual keyboard after sending a text
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-                // Showing last message of listOfMessages
-                showLastMessage();
-            }
-        });
-
+        // Checking if the current user is connected to the application
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            // Redirecting the user sign up
             startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(),
                     SIGN_IN_REQUEST_CODE);
         } else {
-            Snackbar.make(activity_main, "Welcome " + FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+            Snackbar.make(activity_main, "Welcome " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
                     Snackbar.LENGTH_LONG).show();
+
+            // Displaying existing messages in the chat room
             displayChatMessages();
         }
-    }
 
-    private void showLastMessage() {
-        listOfMessages.post(new Runnable() {
+        // Let window moves up and down according to virtual keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        // Setting action on the send button
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                listOfMessages.setSelection(listOfMessages.getAdapter().getCount() - 1);
+            public void onClick(View view) {
+                // Sending data to firebase
+                FirebaseDatabase.getInstance().getReference().push().setValue(new ChatMessage(input.getText().toString(),
+                        FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                input.setText("");
             }
         });
     }
@@ -132,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (hh:mm:ss)", model.getMessageTime()));
-
-                showLastMessage();
             }
         };
         listOfMessages.setAdapter(adapter);
