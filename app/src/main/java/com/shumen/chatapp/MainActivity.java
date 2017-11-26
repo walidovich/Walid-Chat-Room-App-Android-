@@ -1,15 +1,12 @@
 package com.shumen.chatapp;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listOfMessages;
     private FloatingActionButton fab;
     private EditText input;
+    private ConstraintLayout messageItem;
     private TextView messageUserName, messageText, messageUserEmail, messageTime;
 
     @Override
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Snackbar.make(activity_main, "Welcome  " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
                     Snackbar.LENGTH_LONG).show();
-            user= FirebaseAuth.getInstance().getCurrentUser();
+            user = FirebaseAuth.getInstance().getCurrentUser();
 
             // Displaying existing messages in the chat room
             displayChatMessages();
@@ -104,9 +102,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Sending data to firebase
-                // **********************************************************
-                // Work here to solve the problem
-                // **********************************************************
 
                 FirebaseDatabase.getInstance().getReference().push().setValue(
                         new ChatMessage(
@@ -114,39 +109,57 @@ public class MainActivity extends AppCompatActivity {
                                 FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ")[0],
                                 input.getText().toString(),
                                 FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-
-                // **********************************************************
-                // **********************************************************
                 input.setText("");
             }
         });
     }
 
     private void displayChatMessages() {
-        adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.list_item,
+        adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message_item,
                 FirebaseDatabase.getInstance().getReference()) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
 
+                messageItem = v.findViewById(R.id.message_item);
                 messageUserName = v.findViewById(R.id.message_user_name);
                 messageText = v.findViewById(R.id.message_text);
                 messageUserEmail = v.findViewById(R.id.message_user_email);
                 messageTime = v.findViewById(R.id.message_time);
 
-                messageUserName.setText(model.getMessageUserName()+":");
-                messageText.setText(model.getMessageText());
-                messageUserEmail.setText(model.getMessageUserEmail());
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (hh:mm:ss)", model.getMessageTime()));
-                customizeBackground(model);
+                pickResource(v, model);
+                writeTexts(model);
             }
         };
         listOfMessages.setAdapter(adapter);
     }
 
-    private void customizeBackground(ChatMessage model) {
-        if(!model.getMessageUserEmail().equals(user.getEmail())){
+    private void writeTexts(ChatMessage model) {
+        messageUserName.setText(model.getMessageUserName() + ":");
+        messageText.setText(model.getMessageText());
+        messageUserEmail.setText(model.getMessageUserEmail());
+        messageTime.setText(DateFormat.format("dd-MM-yyyy (hh:mm:ss)", model.getMessageTime()));
+    }
+
+    private void pickResource(View v, ChatMessage model) {
+        if (model.getMessageUserEmail().equals(user.getEmail())) {
+            // This is an outgoing message.
+            /*
+            messageItem = v.findViewById(R.id.message_item_outgoing);
+            messageUserName = v.findViewById(R.id.message_user_name_outgoing);
+            messageText = v.findViewById(R.id.message_text_outgoing);
+            messageUserEmail = v.findViewById(R.id.message_user_email_outgoing);
+            messageTime = v.findViewById(R.id.message_time_outgoing);
+            */
             messageUserName.setBackgroundResource(R.color.colorMessageBackgroundOut);
-        }else{
+        } else {
+            // This is an income message.
+            /*
+            messageItem = v.findViewById(R.id.message_item_incoming);
+            messageUserName = v.findViewById(R.id.message_user_name_incoming);
+            messageText = v.findViewById(R.id.message_text_incoming);
+            messageUserEmail = v.findViewById(R.id.message_user_email_incoming);
+            messageTime = v.findViewById(R.id.message_time_incoming);
+            */
             messageUserName.setBackgroundResource(R.color.colorMessageBackgroundIn);
         }
     }

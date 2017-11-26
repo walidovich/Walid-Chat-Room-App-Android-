@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3e3e3e</color>
     <color name="colorPrimaryDark">#202020</color>
     <color name="colorAccent">#4053ff</color>
-    <color name="messageBackground">#dddddd</color>
-    <color name="colorMessageBackgroundOut">#7aff77</color>
-    <color name="colorMessageBackgroundIn">#5a9fff</color>
+    <color name="colorMessageBackground">#bebebe</color>
+    <color name="colorMessageBackgroundOut">#a7ffa5</color>
+    <color name="colorMessageBackgroundIn">#fff59a</color>
 </resources>
