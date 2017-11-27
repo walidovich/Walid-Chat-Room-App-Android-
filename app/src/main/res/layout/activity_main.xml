@@ -56,7 +56,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_height="40dp"
-        android:background="@color/colorMessageBackground"/>
+        android:background="@color/colorMessageBackground"
+        android:layout_alignParentLeft="true"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_send"

@@ -1,10 +1,16 @@
 package com.shumen.chatapp;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -141,26 +147,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void pickResource(View v, ChatMessage model) {
+        GradientDrawable drawable = (GradientDrawable) messageItem.getBackground();
+        int sdk = android.os.Build.VERSION.SDK_INT;
         if (model.getMessageUserEmail().equals(user.getEmail())) {
-            // This is an outgoing message.
-            /*
-            messageItem = v.findViewById(R.id.message_item_outgoing);
-            messageUserName = v.findViewById(R.id.message_user_name_outgoing);
-            messageText = v.findViewById(R.id.message_text_outgoing);
-            messageUserEmail = v.findViewById(R.id.message_user_email_outgoing);
-            messageTime = v.findViewById(R.id.message_time_outgoing);
-            */
-            messageUserName.setBackgroundResource(R.color.colorMessageBackgroundOut);
+
+            if(sdk< Build.VERSION_CODES.M) {
+
+                // This is an outgoing message.
+                drawable.setColor(getResources().getColor(R.color.colorMessageBackgroundOut));
+
+            }else{
+
+                messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundOut));
+            }
         } else {
             // This is an income message.
-            /*
-            messageItem = v.findViewById(R.id.message_item_incoming);
-            messageUserName = v.findViewById(R.id.message_user_name_incoming);
-            messageText = v.findViewById(R.id.message_text_incoming);
-            messageUserEmail = v.findViewById(R.id.message_user_email_incoming);
-            messageTime = v.findViewById(R.id.message_time_incoming);
-            */
-            messageUserName.setBackgroundResource(R.color.colorMessageBackgroundIn);
+            if(sdk< Build.VERSION_CODES.M) {
+
+                // This is an outgoing message.
+                drawable.setColor(getResources().getColor(R.color.colorMessageBackgroundIn));
+
+            }else{
+
+                messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundIn));
+            }
         }
     }
 }
