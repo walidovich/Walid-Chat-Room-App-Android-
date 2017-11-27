@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void pickResource(View v, ChatMessage model) {
         GradientDrawable drawable = (GradientDrawable) messageItem.getBackground();
-        int sdk = android.os.Build.VERSION.SDK_INT;
+        int sdk = Build.VERSION.SDK_INT;
         if (model.getMessageUserEmail().equals(user.getEmail())) {
 
             if(sdk< Build.VERSION_CODES.M) {
@@ -158,7 +158,9 @@ public class MainActivity extends AppCompatActivity {
 
             }else{
 
-                messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundOut));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundOut));
+                }
             }
         } else {
             // This is an income message.
@@ -169,7 +171,9 @@ public class MainActivity extends AppCompatActivity {
 
             }else{
 
-                messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundIn));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundIn));
+                }
             }
         }
     }

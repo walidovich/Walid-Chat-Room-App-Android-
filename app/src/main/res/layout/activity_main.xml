@@ -28,7 +28,6 @@
         tools:layout_constraintRight_creator="1"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- These let the list view load and always scroll to last item
@@ -42,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:hint="Type your message here"
@@ -63,7 +62,7 @@
         android:id="@+id/fab_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
         android:src="@drawable/ic_send"
