@@ -1,24 +1,23 @@
 package com.shumen.chatapp;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Space;
 import android.widget.TextView;
 import android.text.format.DateFormat;
 
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayChatMessages() {
-        adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message_item,
+        adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.row_item,
                 FirebaseDatabase.getInstance().getReference()) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
@@ -143,37 +142,33 @@ public class MainActivity extends AppCompatActivity {
         messageUserName.setText(model.getMessageUserName() + ":");
         messageText.setText(model.getMessageText());
         messageUserEmail.setText(model.getMessageUserEmail());
-        messageTime.setText(DateFormat.format("dd-MM-yyyy (hh:mm:ss)", model.getMessageTime()));
+        messageTime.setText(DateFormat.format("dd-MM-yyyy(HH:mm)", model.getMessageTime()));
     }
 
     private void pickResource(View v, ChatMessage model) {
         GradientDrawable drawable = (GradientDrawable) messageItem.getBackground();
-        int sdk = Build.VERSION.SDK_INT;
+        ConstraintLayout.LayoutParams messageItemLayout= (ConstraintLayout.LayoutParams) messageItem.getLayoutParams();
+        int margin=80;
         if (model.getMessageUserEmail().equals(user.getEmail())) {
-
-            if(sdk< Build.VERSION_CODES.M) {
-
-                // This is an outgoing message.
-                drawable.setColor(getResources().getColor(R.color.colorMessageBackgroundOut));
-
-            }else{
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundOut));
-                }
+            // This is an outgoing message.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundOut));
+                messageItemLayout.setMarginEnd(margin);
             }
+            else {
+                drawable.setColor(getResources().getColor(R.color.colorMessageBackgroundOut));
+                messageItemLayout.setMargins(0,0,margin,0);
+            }
+
         } else {
             // This is an income message.
-            if(sdk< Build.VERSION_CODES.M) {
-
-                // This is an outgoing message.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundIn));
+                messageItemLayout.setMarginStart(margin);
+            }
+            else {
                 drawable.setColor(getResources().getColor(R.color.colorMessageBackgroundIn));
-
-            }else{
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    messageItem.setBackgroundTintList(getResources().getColorStateList(R.color.colorMessageBackgroundIn));
-                }
+                messageItemLayout.setMargins(margin,0,0,0);
             }
         }
     }

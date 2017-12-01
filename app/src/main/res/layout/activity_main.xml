@@ -15,10 +15,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
+        android:dividerHeight="4dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         app:layout_constraintBottom_toTopOf="@+id/input_message"
@@ -26,8 +26,8 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- These let the list view load and always scroll to last item
@@ -62,8 +62,7 @@
         android:id="@+id/fab_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="4dp"
         android:clickable="true"
         android:src="@drawable/ic_send"
         android:tint="@android:color/white"
@@ -72,6 +71,7 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"/>
 
 </android.support.constraint.ConstraintLayout>
