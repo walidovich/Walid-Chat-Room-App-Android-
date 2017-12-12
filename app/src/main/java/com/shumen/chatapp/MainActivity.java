@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         GradientDrawable drawable = (GradientDrawable) messageItem.getBackground();
         ConstraintLayout.LayoutParams messageItemLayout= (ConstraintLayout.LayoutParams) messageItem.getLayoutParams();
         int margin=80;
-        float radius=15;
+        float radius=20;
         if (model.getMessageUserEmail().equals(user.getEmail())) {
             // This is an outgoing message.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
