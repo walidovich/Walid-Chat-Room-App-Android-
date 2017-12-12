@@ -9,15 +9,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Space;
 import android.widget.TextView;
 import android.text.format.DateFormat;
 
@@ -68,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SIGN_IN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Snackbar.make(activity_main, "Successfully signed in. Welcome!", Snackbar.LENGTH_LONG).show();
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                displayChatMessages();
             } else {
                 Snackbar.make(activity_main, "We couldn't sign you in. Please try again later.", Snackbar.LENGTH_LONG).show();
                 finish();
@@ -80,10 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        activity_main = findViewById(R.id.activity_main);
-        listOfMessages = findViewById(R.id.list_of_messages);
-        fab = findViewById(R.id.fab_send);
-        input = findViewById(R.id.input_message);
+        intializeMainComponents();
 
         // Checking if the current user is connected to the application
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
@@ -117,6 +113,13 @@ public class MainActivity extends AppCompatActivity {
                 input.setText("");
             }
         });
+    }
+
+    private void intializeMainComponents() {
+        activity_main = findViewById(R.id.activity_main);
+        listOfMessages = findViewById(R.id.list_of_messages);
+        fab = findViewById(R.id.fab_send);
+        input = findViewById(R.id.input_message);
     }
 
     private void displayChatMessages() {
