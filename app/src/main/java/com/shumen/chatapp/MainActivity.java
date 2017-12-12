@@ -1,7 +1,13 @@
 package com.shumen.chatapp;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout messageItem;
     private TextView messageUserName, messageText, messageUserEmail, messageTime;
 
+    // Signing out the current user.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_sign_out) {
@@ -53,19 +60,22 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // Adding the Sign out menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
+    // Manage signing in to the chat application
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGN_IN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Snackbar.make(activity_main, "Successfully signed in. Welcome!", Snackbar.LENGTH_LONG).show();
                 user = FirebaseAuth.getInstance().getCurrentUser();
+                Snackbar.make(activity_main, "Successfully signed in. Welcome " +
+                        user.getDisplayName()+".", Snackbar.LENGTH_LONG).show();
                 displayChatMessages();
             } else {
                 Snackbar.make(activity_main, "We couldn't sign you in. Please try again later.", Snackbar.LENGTH_LONG).show();
@@ -152,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
         GradientDrawable drawable = (GradientDrawable) messageItem.getBackground();
         ConstraintLayout.LayoutParams messageItemLayout= (ConstraintLayout.LayoutParams) messageItem.getLayoutParams();
         int margin=80;
+        float radiusTop=20;
+        float radiusBottom=20;
         if (model.getMessageUserEmail().equals(user.getEmail())) {
             // This is an outgoing message.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -162,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 drawable.setColor(getResources().getColor(R.color.colorMessageBackgroundOut));
                 messageItemLayout.setMargins(0,0,margin,0);
             }
-
+            drawable.setCornerRadii(new float[]{0, 0,radiusTop,radiusTop,radiusBottom,radiusBottom,radiusBottom,radiusBottom});
         } else {
             // This is an income message.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -173,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 drawable.setColor(getResources().getColor(R.color.colorMessageBackgroundIn));
                 messageItemLayout.setMargins(margin,0,0,0);
             }
+            drawable.setCornerRadii(new float[]{radiusTop,radiusTop,0,0,radiusBottom,radiusBottom,radiusBottom,radiusBottom});
         }
     }
 }
